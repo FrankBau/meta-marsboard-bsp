@@ -3,6 +3,8 @@ meta-marsboard-bsp
 
 Yocto BSP Layer for Embest Tech iMX6 MarS Board.
 
+MarS Board: http://www.embest-tech.com/shop/star/marsboard.html
+
 This Yocto layer is based on a buildroot build environment
 for the MarS Board by Hariharan Veerappan:
 
@@ -26,27 +28,32 @@ for detailed setup information.
 community BSP (${BSPDIR}/sources), parallel to the other meta-* layers
 
 2. in the build folder of the Freescale community BSP, edit the following files:
-2.1. in ${BSPDIR}/build/conf/bblayers.conf add a last line 
 
+* in ${BSPDIR}/build/conf/bblayers.conf add a last line 
+
+<pre>
   ...
   ${BSPDIR}/sources/meta-marsboard-bsp \
 "
+</pre>
 
-2.2. in ${BSPDIR}/build/conf/local.conf change the MACHINE name
-
+* in ${BSPDIR}/build/conf/local.conf change the MACHINE name
+</pre>
   MACHINE ??= 'marsboard'
+</pre>
 
 3. start bitbake environment from ${BSPDIR}:
-
+<pre>
   . ./setup_environment.sh build
+</pre>
 
 4. bitbake U-Boot bootloader and a test image
-
+<pre>
   bitbake virtual/bootloader
   bitbake core-image-minimal
+</pre>
 
 5. Test the image on your MarS Board 
-  http://www.embest-tech.com/shop/star/marsboard.html
 
 How to run you test image
 =========================
