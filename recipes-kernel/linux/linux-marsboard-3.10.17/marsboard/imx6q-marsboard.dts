@@ -93,9 +93,9 @@
 		  status = "disabled";
 	  };
 
-	  v4l2_out {
+	  v4l2_out { // v4l2 output support: /dev/video16 ,...
 		  compatible = "fsl,mxc_v4l2_output";
-		  status = "disabled";
+		  status = "okay";
 	  };
 };
 
