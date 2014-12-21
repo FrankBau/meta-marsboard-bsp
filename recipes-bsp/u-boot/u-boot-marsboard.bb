@@ -1,20 +1,19 @@
 require recipes-bsp/u-boot/u-boot.inc
 
-LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://COPYING;md5=1707d6db1d42237583f50183a5651ecb"
+LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://Licenses/README;md5=c7383a594871c03da76b3707929d2919"
+
 COMPATIBLE_MACHINE = "(marsboard)"
 
 PROVIDES = "virtual/bootloader"
 
-PV = "v2013.04+git${SRCPV}"
+PV = "mainline+git${SRCPV}"
 
-SRCREV = "389452b8485c4398e3a62d6db16db36920f4c53a"
-SRCBRANCH = "v2014.07-20140914"
-SRC_URI = "git://gitorious.org/u-boot-2013-04-port-on-imx6-marsboard/u-boot-2013-04-port-on-imx6-marsboard.git;rev=${SRCREV};subpath=u-boot-2013.04"
+SRCREV = "d8bec60c1b0de7770f9b56ad092ab9be801d99af"
+SRC_URI = "git://git.denx.de/u-boot.git;rev=${SRCREV}"
 
-S = "${WORKDIR}/u-boot-2013.04"
+S = "${WORKDIR}/git"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-UBOOT_MACHINE = "mx6qmarsboard"
 
