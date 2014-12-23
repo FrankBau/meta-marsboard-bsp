@@ -1,3 +1,7 @@
+News 
+====
+there is a wiki https://github.com/FrankBau/meta-marsboard-bsp/wiki
+
 meta-marsboard-bsp
 ==================
 
