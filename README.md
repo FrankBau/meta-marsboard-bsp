@@ -24,12 +24,16 @@ A Yocto build host (tested with Ubuntu 14.04 LTS).
 See https://www.yoctoproject.org/documentation 
 for detailed setup information.
 
-Installed Freescale Community BSP (tested with branch daisy) 
+Installed Freescale Community BSP (tested with branch dizzy) 
 See https://github.com/Freescale/fsl-community-bsp-platform
 for detailed setup information.
 
 1. git clone this repo into the source folder of the Freescale
 community BSP (${BSPDIR}/sources), parallel to the other meta-* layers
+Use the correct branch you want to work with. master is always under development, e.g.:
+  
+    git clone https://github.com/FrankBau/meta-marsboard-bsp.git
+    git checkout dizzy
 
 2. in the build folder of the Freescale community BSP, edit the following files:
 
