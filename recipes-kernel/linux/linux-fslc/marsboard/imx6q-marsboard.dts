@@ -1,0 +1,247 @@
+/dts-v1/;
+
+#include "imx6q.dtsi"
+
+/ {
+  	model = "Marsboard i.MX6 Dual Board";
+	compatible = "embest,imx6q-marsboard", "fsl,imx6q";
+	  aliases {
+		  mxcfb0 = &mxcfb1;
+		  mxcfb1 = &mxcfb2;
+		  mxcfb2 = &mxcfb3;
+		  mxcfb3 = &mxcfb4;
+	  };
+
+	  memory {
+		reg = <0x10000000 0x40000000>;
+	  };
+
+	leds { /* see iomuxc definition below */
+		compatible = "gpio-leds";
+		sys_led {
+			gpios = <&gpio3 28 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+		};
+		user_led {
+			gpios = <&gpio5 2 GPIO_ACTIVE_LOW>;
+		};
+	};
+	
+	sound-hdmi {
+		compatible = "fsl,imx6q-audio-hdmi", "fsl,imx-audio-hdmi";
+		model = "imx-audio-hdmi";
+		hdmi-controller = <&hdmi_audio>;
+	};
+
+	mxcfb1: fb@0 {
+		  compatible = "fsl,mxc_sdc_fb";
+		  disp_dev = "ldb";
+		  interface_pix_fmt = "RGB666";
+		  mode_str ="LDB-XGA";
+		  default_bpp = <16>;
+		  int_clk = <0>;
+		  late_init = <0>;
+		  status = "disabled";
+	  };
+
+	  mxcfb2: fb@1 {
+		  compatible = "fsl,mxc_sdc_fb";
+		  disp_dev = "hdmi";
+		  interface_pix_fmt = "RGB24";
+		  mode_str ="1920x1080M@60";
+		  default_bpp = <24>;
+		  int_clk = <0>;
+		  late_init = <0>;
+		  status = "enabled";
+	  };
+
+	  mxcfb3: fb@2 {
+		  compatible = "fsl,mxc_sdc_fb";
+		  disp_dev = "lcd";
+		  interface_pix_fmt = "RGB565";
+		  mode_str ="CLAA-WVGA";
+		  default_bpp = <16>;
+		  int_clk = <0>;
+		  late_init = <0>;
+		  status = "disabled";
+	  };
+
+	  mxcfb4: fb@3 {
+		  compatible = "fsl,mxc_sdc_fb";
+		  disp_dev = "ldb";
+		  interface_pix_fmt = "RGB666";
+		  mode_str ="LDB-XGA";
+		  default_bpp = <16>;
+		  int_clk = <0>;
+		  late_init = <0>;
+		  status = "disabled";
+	  };
+
+	  v4l2_cap_0 {
+		  compatible = "fsl,imx6q-v4l2-capture";
+		  ipu_id = <0>;
+		  csi_id = <0>;
+		  mclk_source = <0>;
+		  status = "disabled";
+	  }; 
+
+	  v4l2_cap_1 {
+		  compatible = "fsl,imx6q-v4l2-capture";
+		  ipu_id = <0>;
+		  csi_id = <1>;
+		  mclk_source = <0>;
+		  status = "disabled";
+	  };
+
+	  v4l2_out { // v4l2 output support: /dev/video16 ,...
+		  compatible = "fsl,mxc_v4l2_output";
+		  status = "okay";
+	  };
+};
+
+
+&iomuxc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_hog>;
+
+	hog {
+		pinctrl_hog: hoggrp {
+		fsl,pins = < 
+			/* RIoT board ?! */
+			MX6QDL_PAD_GPIO_2__GPIO1_IO02 0x80000000 /* SD2 WP */
+			MX6QDL_PAD_GPIO_4__GPIO1_IO04 0x80000000 /* SD2 CD */
+
+			/* gpio-leds */
+			MX6QDL_PAD_EIM_D28__GPIO3_IO28 0x80000000
+			MX6QDL_PAD_EIM_A25__GPIO5_IO02 0x80000000
+		>;
+		};
+	};
+	
+	i2c3 {		/* for LVDS display */
+		pinctrl_i2c3_5: i2c3grp-5 {
+			fsl,pins = <
+					MX6QDL_PAD_GPIO_5__I2C3_SCL 0x4001b8b1
+					MX6QDL_PAD_GPIO_6__I2C3_SDA 0x4001b8b1
+			>;
+		};
+	};
+};
+
+&i2c2 {
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c2_2>;
+	status = "okay";
+
+	hdmi: edid@50 {
+		compatible = "fsl,imx6-hdmi-i2c";
+		reg = <0x50>;
+	};
+};
+
+&cpu0 {
+  arm-supply = <&reg_arm>;
+  soc-supply = <&reg_soc>;
+  pu-supply = <&reg_pu>; /* use pu_dummy if VDDSOC share with VDDPU */
+};
+
+&gpc {
+  fsl,ldo-bypass = <0>; /* use ldo-bypass, u-boot will check it and configure */
+  fsl,wdog-reset = <1>; /* watchdog select of reset source */
+  pu-supply = <&reg_pu>; /* ldo-bypass:use pu_dummy if VDDSOC share with VDDPU */
+};
+
+&gpu {
+  pu-supply = <&reg_pu>; /* ldo-bypass:use pu_dummy if VDDSOC share with VDDPU */
+};
+
+&vpu {
+  pu-supply = <&reg_pu>; /* ldo-bypass:use pu_dummy if VDDSOC share with VDDPU */
+};
+
+&fec {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_enet_1>;
+  phy-mode = "rgmii";
+  status = "okay";
+};
+
+&mxcfb1 {
+  status = "okay";
+};
+
+&ldb {
+  ipu_id = <1>;
+  disp_id = <1>;
+  ext_ref = <1>;
+  mode = "sep1";
+  sec_ipu_id = <1>;
+  sec_disp_id = <0>;
+  status = "okay";
+};
+
+&uart1 {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_uart1_1>;
+  status = "okay";
+};
+
+&uart2 {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_uart2_1>;
+  status = "okay";
+};
+
+&uart3 {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_uart3_1>;
+  status = "okay";
+};
+
+&usbh1 {
+  status = "okay";
+};
+
+&usdhc2 {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_usdhc2_2>;
+  cd-gpios = <&gpio1 4 0>;
+  wp-gpios = <&gpio1 2 0>;
+  status = "okay";
+};
+
+&usdhc3 {
+  pinctrl-names = "default";
+  pinctrl-0 = <&pinctrl_usdhc3_2>;
+  non-removable;
+  status = "okay";
+};
+
+// not present on MarS
+// &hdmi_audio {
+// 	status = "okay";
+// };
+// 
+// &hdmi_cec {
+// 	pinctrl-names = "default";
+// 	pinctrl-0 = <&pinctrl_hdmi_cec_2>;
+// 	status = "okay";
+// };
+
+&mxcfb2 {
+	status = "okay";
+};
+
+&hdmi_core {
+	ipu_id = <0>;
+	disp_id = <0>;
+	status = "okay";
+};
+
+&hdmi_video {
+	fsl,phy_reg_vlev = <0x0294>;
+	fsl,phy_reg_cksymtx = <0x800d>;
+	status = "okay";
+};
+
