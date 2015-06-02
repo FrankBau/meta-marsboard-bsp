@@ -26,5 +26,44 @@ IMAGE_INSTALL += " kernel-dev"
 # as an alternative you might want to create a third "data" partition on the microSD card
 IMAGE_ROOTFS_EXTRA_SPACE = "1024000" 
 
-# strictly speaking: only needed for libav (OpenCV)
-LICENSE_FLAGS_WHITELIST += " commercial"
+IMAGE_INSTALL_append += " \
+  eglinfo-fb \
+"
+
+IMAGE_INSTALL_append += " \
+    qtbase-fonts \
+    qtbase-plugins \
+    qtbase-tools \
+    qtdeclarative \
+    qtdeclarative-plugins \
+    qtdeclarative-tools \
+    qtdeclarative-qmlplugins \
+    qtmultimedia \
+    qtmultimedia-plugins \
+    qtmultimedia-qmlplugins \
+    qtsvg \
+    qtsvg-plugins \
+    qtsensors \
+    qtimageformats-plugins \
+    qtsystems \
+    qtsystems-tools \
+    qtsystems-qmlplugins \
+    qtscript \
+    qt3d \
+    qt3d-qmlplugins \
+    qt3d-tools \
+    qtgraphicaleffects-qmlplugins \
+    qtconnectivity-qmlplugins \
+    qtlocation-plugins \
+    qtlocation-qmlplugins \
+    qtwebkit \
+    qtwebkit-qmlplugins \
+"
+
+IMAGE_INSTALL_append += " \
+    cinematicexperience \
+    qtsmarthome \
+    qt5everywheredemo \
+    qtwebkit-examples-examples \
+"
+
