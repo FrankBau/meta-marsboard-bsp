@@ -27,6 +27,13 @@
 		};
 	};
 	
+	sound-hdmi {
+		compatible = "fsl,imx6q-audio-hdmi", "fsl,imx-audio-hdmi";
+		model = "imx-audio-hdmi";
+		hdmi-controller = <&hdmi_audio>;
+		status = "okay";
+	};
+
 	mxcfb1: fb@0 {
 		compatible = "fsl,mxc_sdc_fb";
 		disp_dev = "hdmi";
@@ -92,13 +99,14 @@
 		status = "okay";
 	};
 
-	pwmleds {
-		compatible = "pwm-leds";
-		my_pwm {
-			pwms = <&pwm4 0 5000000>;
-			max-brightness = <255>;
-		};
-	};
+//	pwmleds {
+//		compatible = "pwm-leds";
+//		my_pwm {
+//			pwms = <&pwm4 0 5000000>;
+//			max-brightness = <255>;
+//		};
+//	};
+
 };
 
 &iomuxc {
@@ -108,10 +116,6 @@
 	hog {
 		pinctrl_hog: hoggrp {
 		fsl,pins = < 
-			/* RIoT board ?! */
-			MX6QDL_PAD_GPIO_2__GPIO1_IO02 0x80000000 /* SD2 WP */
-			MX6QDL_PAD_GPIO_4__GPIO1_IO04 0x80000000 /* SD2 CD */
-
 			/* gpio-leds */
 			MX6QDL_PAD_EIM_D28__GPIO3_IO28 0x80000000
 			MX6QDL_PAD_EIM_A25__GPIO5_IO02 0x80000000
@@ -119,24 +123,29 @@
 		};
 	};
 	
-	i2c3 {		/* for LVDS display */
-		pinctrl_i2c3_5: i2c3grp-5 {
-			fsl,pins = <
-					MX6QDL_PAD_GPIO_5__I2C3_SCL 0x4001b8b1
-					MX6QDL_PAD_GPIO_6__I2C3_SDA 0x4001b8b1
-			>;
-		};
-	};
+// shared on LCD port (J12), extension header (J11), and LVDS display (J3), on-board pull-ups
+// 
+//	i2c3 {		/* for LVDS display */
+//		pinctrl_i2c3_5: i2c3grp-5 {
+//			fsl,pins = <
+//					MX6QDL_PAD_GPIO_5__I2C3_SCL 0x4001b8b1
+//					MX6QDL_PAD_GPIO_6__I2C3_SDA 0x4001b8b1
+//			>;
+//		};
+//	};
 
-	pwm4 {
-		pinctrl_pwm4_2: pwm4grp-2 {
-			fsl,pins = <
-				MX6QDL_PAD_SD1_CMD__PWM4_OUT 0x1b0b1
-			>;
-		};
-	};
+// shared on J10 and LVDS display (J3)
+//	pwm4 {
+//		pinctrl_pwm4_2: pwm4grp-2 {
+//			fsl,pins = <
+//				MX6QDL_PAD_SD1_CMD__PWM4_OUT 0x1b0b1
+//			>;
+//		};
+//	};
+
 };
 
+// part of HDMI (J1)
 &i2c2 {
 	clock-frequency = <100000>;
 	pinctrl-names = "default";
@@ -182,6 +191,10 @@
 	status = "okay";
 };
 
+&hdmi_audio {
+	status = "okay";
+};
+
 &hdmi_video {
 	fsl,phy_reg_vlev = <0x0294>;
 	fsl,phy_reg_cksymtx = <0x800d>;
@@ -192,37 +205,42 @@
 	status = "okay";
 };
 
-&ldb {
-	ipu_id = <1>;
-	disp_id = <1>;
-	ext_ref = <1>;
-	mode = "sep1";
-	sec_ipu_id = <1>;
-	sec_disp_id = <0>;
-};
+// example for display
+//&ldb {
+//	ipu_id = <1>;
+//	disp_id = <1>;
+//	ext_ref = <1>;
+//	mode = "sep1";
+//	sec_ipu_id = <1>;
+//	sec_disp_id = <0>;
+//};
 
-&uart1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_uart1_1>;
-	status = "okay";
-};
+// example for UART on J11
+//&uart1 {
+//	pinctrl-names = "default";
+//	pinctrl-0 = <&pinctrl_uart1_1>;
+//	status = "okay";
+//};
 
+// this is debug com
 &uart2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_uart2_1>;
 	status = "okay";
 };
 
-&uart3 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_uart3_1>;
-	status = "okay";
-};
+// example for UART on J10
+//&uart3 {
+//	pinctrl-names = "default";
+//	pinctrl-0 = <&pinctrl_uart3_1>;
+//	status = "okay";
+//};
 
 &usbh1 {
 	status = "okay";
 };
 
+// micro-SD card J13
 &usdhc2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc2_2>;
@@ -231,6 +249,7 @@
 	status = "okay";
 };
 
+// on-board eMMC
 &usdhc3 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc3_2>;
@@ -238,9 +257,11 @@
 	status = "okay";
 };
 
-&pwm4 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_pwm4_2>;
-	status = "okay";
-};
+// example for PWM
+//&pwm4 {
+//	pinctrl-names = "default";
+//	pinctrl-0 = <&pinctrl_pwm4_2>;
+//	status = "okay";
+//};
+
 
