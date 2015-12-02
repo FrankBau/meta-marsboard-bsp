@@ -38,11 +38,11 @@
 		compatible = "fsl,mxc_sdc_fb";
 		disp_dev = "hdmi";
 		interface_pix_fmt = "RGB24";
-		mode_str ="1920x1080M@60";
-		default_bpp = <24>;
+		mode_str ="1280x720M@60";
+		default_bpp = <32>;
 		int_clk = <0>;
 		late_init = <0>;
-		status = "enabled";
+		status = "okay";
 	};
 
 	mxcfb2: fb@1 {
@@ -143,6 +143,13 @@
 //		};
 //	};
 
+	sound-hdmi {
+		compatible = "fsl,imx6q-audio-hdmi",
+			     "fsl,imx-audio-hdmi";
+		model = "imx-audio-hdmi";
+		hdmi-controller = <&hdmi_audio>;
+	};
+
 };
 
 // part of HDMI (J1)
@@ -186,7 +193,7 @@
 };
 
 &hdmi_core {
-	ipu_id = <0>;
+	ipu_id = <1>;
 	disp_id = <0>;
 	status = "okay";
 };
