@@ -17,8 +17,10 @@ CORE_IMAGE_EXTRA_INSTALL += " \
     packagegroup-fsl-tools-benchmark \
 "
 
+IMAGE_INSTALL +=" cpufrequtils nano libsdl2 libsdl2-dev iperf git subversion wget" 
+
 # the default "Boot MarSBoard" is not a valid FAT label and caused stress
 BOOTDD_VOLUME_ID = "BOOT"
 
-IMAGE_ROOTFS_EXTRA_SPACE = "1024000" 
+IMAGE_ROOTFS_EXTRA_SPACE = "512000" 
 
