@@ -136,13 +136,6 @@
 		};
 	};
 
-	sound-hdmi {
-		compatible = "fsl,imx6q-audio-hdmi",
-			     "fsl,imx-audio-hdmi";
-		model = "imx-audio-hdmi";
-		hdmi-controller = <&hdmi_audio>;
-	};
-
 };
 
 &i2c2 {
@@ -184,9 +177,6 @@
 	status = "okay";
 };
 
-&hdmi_audio {
-	status = "okay";
-};
 
 &hdmi_core {
 	ipu_id = <1>;
@@ -199,6 +189,11 @@
 	fsl,phy_reg_cksymtx = <0x800d>;
 	status = "okay";
 };
+
+&hdmi_audio {
+	status = "okay";
+};
+
 
 &mxcfb1 {
 	status = "okay";
