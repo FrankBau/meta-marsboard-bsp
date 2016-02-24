@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/boundarydevices/linux-imx6.git;branch=${SRCBRANCH} \
            file://imx6q-marsboard.dts \
 "
 
-do_install_prepend () {
+do_compile_prepend () {
 	cp ${WORKDIR}/imx6q-marsboard.dts \
 	${S}/arch/${ARCH}/boot/dts
 }
