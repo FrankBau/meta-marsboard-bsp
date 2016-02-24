@@ -16,9 +16,9 @@ do_compile_prepend () {
 	${S}/arch/${ARCH}/boot/dts
 }
 
-LOCALVERSION = "-1.1.0+yocto"
-SRCBRANCH = "boundary-imx_3.10.53_1.1.0_ga-pass3"
-SRCREV = "ebb4458575a43cd94f52f2d370739f411bd094e7"
+LOCALVERSION = "-1.1.1+yocto"
+SRCBRANCH = "boundary-imx_3.10.53_1.1.1_ga"
+SRCREV = "${AUTOREV}"
 DEPENDS += "lzop-native bc-native"
 COMPATIBLE_MACHINE = "(mx6)"
 COMPATIBLE_MACHINE = "(marsboard)"
