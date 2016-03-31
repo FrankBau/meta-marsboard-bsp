@@ -10,15 +10,11 @@ PROVIDES = "virtual/bootloader"
 
 PV = "mainline+git${SRCPV}"
 
-# this is 2015-06-28 shortly after tag v2015.07-rc2
-# SRCREV = "7853d76b0bdab9b1a4da0bba8da6d12b5b8a303f"
-
-# v2015.10
-SRCREV = "5ec0003b19cbdf06ccd6941237cbc0d1c3468e2d"
+# this is tag v2015.07
+SRCREV = "33711bdd4a4dce942fb5ae85a68899a8357bdd94"
 SRC_URI = "git://git.denx.de/u-boot.git;rev=${SRCREV}"
 
 S = "${WORKDIR}/git"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-
 
