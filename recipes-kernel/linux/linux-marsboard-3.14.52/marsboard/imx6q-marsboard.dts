@@ -5,6 +5,8 @@
 / {
   	model = "Marsboard i.MX6 Dual Board";
 	compatible = "embest,imx6q-marsboard", "fsl,imx6q";
+
+
 	aliases {
 		mxcfb0 = &mxcfb1;
 		mxcfb1 = &mxcfb2;
@@ -12,16 +14,54 @@
 		mxcfb3 = &mxcfb4;
 	};
 
+
 	memory {
 		reg = <0x10000000 0x40000000>;
 	};
 
+
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		reg_2p5v: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "2P5V";
+			regulator-min-microvolt = <2500000>;
+			regulator-max-microvolt = <2500000>;
+		};
+
+		reg_3p3v: regulator@1 {
+			compatible = "regulator-fixed";
+			reg = <1>;
+			regulator-name = "3P3V";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+		};
+
+		reg_usb_otg_vbus: regulator@2 {
+			compatible = "regulator-fixed";
+			reg = <2>;
+			regulator-name = "usb_otg_vbus";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			gpio = <&gpio3 22 0>; // Alt4: USB_OTG_PWR
+			enable-active-high;
+		};
+	};
+
 	leds { /* see iomuxc definition below */
 		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_led>;
+
 		sys_led {
 			gpios = <&gpio3 28 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "heartbeat";
 		};
+
 		user_led {
 			gpios = <&gpio5 2 GPIO_ACTIVE_LOW>;
 		};
@@ -103,18 +143,15 @@
 
 &iomuxc {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_hog>;
 
 	imx6q-marsboard {
 
-		hog {
-			pinctrl_hog: hoggrp {
+		pinctrl_led: ledgrp {
 			fsl,pins = < 
 				/* gpio-leds */
-				MX6QDL_PAD_EIM_D28__GPIO3_IO28 0x80000000
-				MX6QDL_PAD_EIM_A25__GPIO5_IO02 0x80000000
+				MX6QDL_PAD_EIM_A25__GPIO5_IO02		0x1b0b1	/* user led */
+				MX6QDL_PAD_EIM_D28__GPIO3_IO28		0x1b0b1	/* sys led */
 			>;
-			};
 		};
 
 		pinctrl_enet: enetgrp {
@@ -189,6 +226,14 @@
 				MX6QDL_PAD_SD4_CMD__UART3_TX_DATA 0x1b0b1
 				MX6QDL_PAD_EIM_D30__UART3_CTS_B   0x1b0b1
 				MX6QDL_PAD_EIM_EB3__UART3_RTS_B   0x1b0b1
+			>;
+		};
+
+		pinctrl_usbotg: usbotggrp {
+			fsl,pins = <
+				MX6QDL_PAD_ENET_RX_ER__USB_OTG_ID	0x17059
+				MX6QDL_PAD_EIM_D22__GPIO3_IO22		0x000b0	/* MX6QDL_PAD_EIM_D22__USB_OTG_PWR */
+				MX6QDL_PAD_EIM_D21__USB_OTG_OC		0x1b0b0
 			>;
 		};
 	};
@@ -271,6 +316,18 @@
 
 
 &usbh1 {
+	dr_mode = "host";
+	disable-over-current;
+	status = "okay";
+};
+
+
+&usbotg {
+	vbus-supply = <&reg_usb_otg_vbus>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usbotg>;
+	disable-over-current;
+	dr_mode = "otg";
 	status = "okay";
 };
 
@@ -281,6 +338,7 @@
 	pinctrl-0 = <&pinctrl_usdhc2>;
 	cd-gpios = <&gpio1 4 0>;
 	wp-gpios = <&gpio1 2 0>;
+	vmmc-supply = <&reg_3p3v>;
 	status = "okay";
 };
 
@@ -289,7 +347,8 @@
 &usdhc3 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc3>;
+	vmmc-supply = <&reg_3p3v>;
 	non-removable;
-	status = "disabled";	// does not work. TODO: fix it!
+	status = "okay";	// does not work. TODO: fix it!
 };
 
