@@ -33,8 +33,8 @@ BOOTDD_VOLUME_ID = "BOOT"
 
 # this reserves some extra free space on the rootfs partition
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
-# as an alternative you might want to create a third "data" partition on the microSD card
-IMAGE_ROOTFS_EXTRA_SPACE = "512000" 
+# as an alternative you might want to create a third partition on the microSD card for storing data
+IMAGE_ROOTFS_EXTRA_SPACE = "800000" 
 
 # strictly speaking: only needed for libav (OpenCV)
 LICENSE_FLAGS_WHITELIST += " commercial"

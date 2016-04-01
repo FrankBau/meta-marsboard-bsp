@@ -1,0 +1,27 @@
+From 2225c915d995ddc53219eb93e979b8b4677cadd8 Mon Sep 17 00:00:00 2001
+From: Frank Bauernoeppel <frank@bauernoeppel.de>
+Date: Fri, 1 Apr 2016 13:27:52 +0200
+Subject: [PATCH] increased eth phy reset time
+
+---
+ board/embest/mx6boards/mx6boards.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/board/embest/mx6boards/mx6boards.c b/board/embest/mx6boards/mx6boards.c
+index f8c7468..5899b8e 100644
+--- a/board/embest/mx6boards/mx6boards.c
++++ b/board/embest/mx6boards/mx6boards.c
+@@ -118,8 +118,9 @@ static void setup_iomux_enet(void)
+ 
+ 	/* Reset AR8035 PHY */
+ 	gpio_direction_output(IMX_GPIO_NR(3, 31) , 0);
+-	mdelay(2);
++	mdelay(10);
+ 	gpio_set_value(IMX_GPIO_NR(3, 31), 1);
++	udelay(100);
+ }
+ 
+ int mx6_rgmii_rework(struct phy_device *phydev)
+-- 
+1.9.1
+
