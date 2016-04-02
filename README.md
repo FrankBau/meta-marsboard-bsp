@@ -37,4 +37,21 @@ The .avi file can be viewed using
 
 `gst-play-1.0 cam.avi`
 
+Qt
+--
+On the build host bitbake shell enter:
+`bitbake image-multimedia-full-with-qt` 
+and install that image on the board.
+
+On the board console enter:
+`cd /usr/share/cinematicexperience-1.0`
+`./Qt5_CinematicExperience -platform eglfs`
+and watch the demo on HDMI monitor.
+
+More examples are installed in parallel folders.
+
+
+
+
+
 

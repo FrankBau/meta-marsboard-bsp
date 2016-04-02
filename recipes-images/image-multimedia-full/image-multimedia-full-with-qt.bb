@@ -1,25 +1,7 @@
-# extends fsl image by more features
+# extends image by Qt5
+# needs meta-qt5 layer, see https://github.com/FrankBau/meta-marsboard-bsp/wiki/Qt5-on-MarS-Board
 
-require recipes-fsl/images/fsl-image-multimedia-full.bb
-
-EXTRA_IMAGE_FEATURES += " ssh-server-openssh tools-sdk package-management" 
-
-EXTRA_IMAGE_FEATURES += " tools-testapps tools-profile"
-
-IMAGE_INSTALL_append += " htop i2c-tools packagegroup-fslc-gstreamer1.0-full"
-
-IMAGE_INSTALL_append += " \
-    packagegroup-fsl-gstreamer \
-    packagegroup-fsl-gstreamer-full \
-    packagegroup-fsl-tools-gpu \
-    packagegroup-fsl-tools-gpu-external \
-    packagegroup-fsl-tools-testapps \
-    packagegroup-fsl-tools-benchmark \
-"
-#     ${@base_contains('DISTRO_FEATURES', 'directfb', 'packagegroup-core-directfb', '', d)} 
-
-
-IMAGE_INSTALL += " kernel-dev"
+require image-multimedia-full.bb
 
 # this reserves some extra free space on the rootfs partition
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
@@ -31,31 +13,37 @@ IMAGE_INSTALL_append += " \
 "
 
 IMAGE_INSTALL_append += " \
+    qt3d \
+    qt3d-plugins \
+    qt3d-qmlplugins \
     qtbase-fonts \
     qtbase-plugins \
     qtbase-tools \
+    qtconnectivity \
+    qtconnectivity-tools \
+    qtconnectivity-qmlplugins \
     qtdeclarative \
     qtdeclarative-plugins \
     qtdeclarative-tools \
     qtdeclarative-qmlplugins \
+    qtgraphicaleffects-qmlplugins \
+    qtimageformats-plugins \
+    qtlocation \
+    qtlocation-plugins \
+    qtlocation-qmlplugins \
     qtmultimedia \
     qtmultimedia-plugins \
     qtmultimedia-qmlplugins \
+    qtscript \
+    qtsensors \
     qtsvg \
     qtsvg-plugins \
-    qtsensors \
-    qtimageformats-plugins \
     qtsystems \
     qtsystems-tools \
     qtsystems-qmlplugins \
-    qtscript \
-    qt3d \
-    qt3d-qmlplugins \
-    qt3d-tools \
-    qtgraphicaleffects-qmlplugins \
-    qtconnectivity-qmlplugins \
-    qtlocation-plugins \
-    qtlocation-qmlplugins \
+    qtsystems \
+    qtsystems-tools \
+    qtsystems-qmlplugins \
     qtwebkit \
     qtwebkit-qmlplugins \
 "
@@ -64,6 +52,7 @@ IMAGE_INSTALL_append += " \
     cinematicexperience \
     qtsmarthome \
     qt5everywheredemo \
+    qtwebkit-examples \
     qtwebkit-examples-examples \
 "
 
