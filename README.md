@@ -50,7 +50,10 @@ and watch the demo on HDMI monitor.
 More examples are installed in parallel folders.
 
 
+GPU3D
+-----
+[OpenGL ES 2.0](https://en.wikipedia.org/wiki/OpenGL_ES) (GLES2) is available for HW accelerated 3D rendering. 
+As the images do not include a window manager, full screen rendering is supported based on [EGL](https://en.wikipedia.org/wiki/EGL_%28API%29).
 
-
-
+`cd /opt/viv_samples/vdk/; ./tutorial3_es20`
 
