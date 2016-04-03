@@ -9,10 +9,6 @@ require image-multimedia-full.bb
 IMAGE_ROOTFS_EXTRA_SPACE = "1024000" 
 
 IMAGE_INSTALL_append += " \
-  eglinfo-fb \
-"
-
-IMAGE_INSTALL_append += " \
     qt3d \
     qt3d-plugins \
     qt3d-qmlplugins \

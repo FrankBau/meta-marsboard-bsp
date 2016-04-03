@@ -44,8 +44,7 @@ On the build host bitbake shell enter:
 and install that image on the board.
 
 On the board console enter:
-`cd /usr/share/cinematicexperience-1.0`
-`./Qt5_CinematicExperience -platform eglfs`
+`Qt5_CinematicExperience -platform eglfs`
 and watch the demo on HDMI monitor.
 
 More examples are installed in parallel folders.

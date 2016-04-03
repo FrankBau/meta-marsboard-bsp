@@ -17,14 +17,20 @@ IMAGE_INSTALL_append += " \
     packagegroup-fsl-tools-benchmark \
 "
 
+# 3DGPU HW acceleration stuff: egl, gles2, ...
+IMAGE_INSTALL_append += " imx-gpu-viv eglinfo-fb"
+
 # the default "Boot MarSBoard" is not a valid FAT label and caused stress
 BOOTDD_VOLUME_ID = "BOOT"
 
-# for on target development 
+# for on-target app development
+EXTRA_IMAGE_FEATURES += " dev-pkgs"
+IMAGE_INSTALL_append += " packagegroup-core-tools-profile packagegroup-core-buildessential"
+
+# # for on-target kernel development
 # this adds > 1GB additional sources and headers
 # uncomment this if needed
-# EXTRA_IMAGE_FEATURES += " dev-pkgs"
-# IMAGE_INSTALL_append += " kernel-dev packagegroup-core-tools-profile packagegroup-core-buildessential kernel-devsrc kernel-modules"
+# IMAGE_INSTALL_append += " kernel-dev kernel-devsrc kernel-modules"
 
 IMAGE_INSTALL_append +=" cpufrequtils nano libsdl2 libsdl2-dev iperf git subversion wget" 
 
