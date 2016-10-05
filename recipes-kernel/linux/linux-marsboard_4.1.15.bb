@@ -1,11 +1,11 @@
 # Adapted from linux-imx.inc, copyright (C) 2013, 2014 O.S. Systems Software LTDA
 # Released under the MIT license (see COPYING.MIT for the terms)
-# Adapted to MarS Board
+# Adapted to MarS Board by Frank Bauernoeppel
 
 require recipes-kernel/linux/linux-imx.inc
 require recipes-kernel/linux/linux-dtb.inc
 
-SUMMARY = "Linux kernel for Boundary Devices boards"
+SUMMARY = "Linux kernel for MarS Board"
 
 SRC_URI = "git://github.com/boundarydevices/linux-imx6.git;branch=${SRCBRANCH} \
            file://defconfig \
@@ -17,9 +17,9 @@ do_compile_prepend () {
 	${S}/arch/${ARCH}/boot/dts
 }
 
-LOCALVERSION = "-1.1.0+yocto"
-SRCBRANCH = "boundary-imx_3.14.52_1.1.0_ga"
-SRCREV = "${AUTOREV}"
+LOCALVERSION = "-1.0.0_ga+yocto"
+SRCBRANCH = "boundary-imx_4.1.15_1.0.0_ga"
+SRCREV = "76c24a0cde0d50fc8006b15db94f9c3efc5ec979"
 
 DEPENDS += "lzop-native bc-native"
 

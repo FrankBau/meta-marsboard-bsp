@@ -1,6 +1,7 @@
 /dts-v1/;
 
 #include "imx6q.dtsi"
+#include <dt-bindings/gpio/gpio.h>
 
 / {
   	model = "Marsboard i.MX6 Dual Board";
@@ -58,11 +59,13 @@
 		pinctrl-0 = <&pinctrl_led>;
 
 		sys_led {
+			label = "imx6:green:sys";
 			gpios = <&gpio3 28 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "heartbeat";
 		};
 
 		user_led {
+			label = "imx6:green:user";
 			gpios = <&gpio5 2 GPIO_ACTIVE_LOW>;
 			default-state = "off";
 		};

@@ -17,11 +17,17 @@ IMAGE_INSTALL_append += " \
     packagegroup-fsl-tools-benchmark \
 "
 
-# 3DGPU HW acceleration stuff: egl, gles2, ...
-IMAGE_INSTALL_append += " imx-gpu-viv eglinfo-fb"
+IMAGE_INSTALL_append += " imx-gpu-viv"
+
+# append only when framebuffer backend is used (check conf/local.conf)
+IMAGE_INSTALL_append += " \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', \
+       bb.utils.contains('DISTRO_FEATURES', 'wayland', '', 'eglinfo-fb', d), d)} \
+"
+
 
 # the default "Boot MarSBoard" is not a valid FAT label and caused stress
-BOOTDD_VOLUME_ID = "BOOT"
+BOOTDD_VOLUME_ID = "BOOTMARS"
 
 # for on-target app development
 EXTRA_IMAGE_FEATURES += " dev-pkgs"
@@ -34,8 +40,6 @@ IMAGE_INSTALL_append += " packagegroup-core-tools-profile packagegroup-core-buil
 
 IMAGE_INSTALL_append +=" cpufrequtils nano libsdl2 libsdl2-dev iperf git subversion wget" 
 
-# the default "Boot MarSBoard" is not a valid FAT label and caused stress
-BOOTDD_VOLUME_ID = "BOOT"
 
 # this reserves some extra free space on the rootfs partition
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
@@ -44,3 +48,4 @@ IMAGE_ROOTFS_EXTRA_SPACE = "800000"
 
 # strictly speaking: only needed for libav (OpenCV)
 LICENSE_FLAGS_WHITELIST += " commercial"
+
