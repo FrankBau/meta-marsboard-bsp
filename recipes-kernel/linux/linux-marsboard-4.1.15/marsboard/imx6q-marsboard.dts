@@ -470,9 +470,12 @@
 &usdhc2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc2>;
-	cd-gpios = <&gpio1 4 0>;
-	wp-gpios = <&gpio1 2 0>;
+	bus-width = <4>;
+	cd-gpios = <&gpio1 4 GPIO_ACTIVE_LOW>;
+	wp-gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>; // pulled to lo on board 
 	vmmc-supply = <&reg_3p3v>;
+	no-1-8-v;
+	keep-power-in-suspend;
 	status = "okay";
 };
 
@@ -482,7 +485,9 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc3>;
 	vmmc-supply = <&reg_3p3v>;
+	no-1-8-v;
 	non-removable;
-	status = "okay";	// does not work reliably. TODO: fix it!
+	keep-power-in-suspend;
+	status = "disabled";	// does not work reliably. TODO: fix it!
 };
 
