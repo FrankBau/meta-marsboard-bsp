@@ -21,7 +21,7 @@ IMAGE_INSTALL_append += " imx-gpu-viv"
 
 # append only when framebuffer backend is used (check conf/local.conf)
 IMAGE_INSTALL_append += " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'eglinfo-x11', \
        bb.utils.contains('DISTRO_FEATURES', 'wayland', '', 'eglinfo-fb', d), d)} \
 "
 
@@ -38,8 +38,10 @@ IMAGE_INSTALL_append += " packagegroup-core-tools-profile packagegroup-core-buil
 # uncomment this if needed
 # IMAGE_INSTALL_append += " kernel-dev kernel-devsrc kernel-modules"
 
-IMAGE_INSTALL_append +=" cpufrequtils nano libsdl2 libsdl2-dev iperf git subversion wget" 
+IMAGE_INSTALL_append +=" cpufrequtils nano iperf git subversion wget" 
 
+# link errors in krogoth, t.b.d.
+# IMAGE_INSTALL_append +=" libsdl2 libsdl2-dev" 
 
 # this reserves some extra free space on the rootfs partition
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
