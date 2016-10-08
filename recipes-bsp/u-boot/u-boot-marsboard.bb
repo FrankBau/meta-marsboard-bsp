@@ -1,8 +1,7 @@
 require recipes-bsp/u-boot/u-boot.inc
 
 LICENSE = "GPLv2+"
-#LIC_FILES_CHKSUM = "file://Licenses/README;md5=c7383a594871c03da76b3707929d2919"
-LIC_FILES_CHKSUM = "file://Licenses/README;md5=0507cd7da8e7ad6d6701926ec9b84c95"
+LIC_FILES_CHKSUM = "file://Licenses/README;md5=a2c678cfd4a4d97135585cad908541c6"
 
 COMPATIBLE_MACHINE = "(marsboard)"
 
@@ -10,9 +9,8 @@ PROVIDES = "virtual/bootloader"
 
 PV = "mainline+git${SRCPV}"
 
-# this is tag v2015.07
-SRCREV = "33711bdd4a4dce942fb5ae85a68899a8357bdd94"
-SRC_URI = "git://git.denx.de/u-boot.git;rev=${SRCREV} \
+SRCREV = "f3363c060497515ca8b71451cb56f3ec0abacaa9"
+SRC_URI = "git://git.denx.de/u-boot.git;branch=u-boot-2016.09.y \
            file://0001-increased-eth-phy-reset-time.patch \
 "
 
