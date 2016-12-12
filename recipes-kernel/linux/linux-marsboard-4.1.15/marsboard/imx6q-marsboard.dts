@@ -181,8 +181,7 @@
 				MX6QDL_PAD_EIM_CS0__ECSPI2_SCLK		0x100b1
 				MX6QDL_PAD_EIM_CS1__ECSPI2_MOSI		0x100b1
 				MX6QDL_PAD_EIM_OE__ECSPI2_MISO		0x100b1
-				MX6QDL_PAD_EIM_LBA__GPIO2_IO27		0x000b1	/* CS0 */
-				MX6QDL_PAD_EIM_A17__GPIO2_IO21		0x000b1	/* IRQ */
+				MX6QDL_PAD_EIM_RW__GPIO2_IO26		0x000b1	/* SS0 */
 			>;
 		};
 
@@ -249,8 +248,8 @@
 
 		pinctrl_i2c3: i2c3grp {
 			fsl,pins = <
-				MX6QDL_PAD_GPIO_5__I2C3_SCL		0x4001b8b1
-				MX6QDL_PAD_GPIO_6__I2C3_SDA		0x4001b8b1
+				MX6QDL_PAD_GPIO_5__I2C3_SCL	0x4001b8b1
+				MX6QDL_PAD_GPIO_6__I2C3_SDA	0x4001b8b1
 			>;
 		};
 
@@ -261,6 +260,7 @@
 			>;
 		};
 
+		// debug COM/USB
 		pinctrl_uart2: uart2grp {
 			fsl,pins = <
 				MX6QDL_PAD_EIM_D26__UART2_TX_DATA	0x1b0b1
@@ -270,24 +270,28 @@
 
 		pinctrl_uart3: uart3grp {
 			fsl,pins = <
-				MX6QDL_PAD_SD4_CLK__UART3_RX_DATA	0x1b0b1
 				MX6QDL_PAD_SD4_CMD__UART3_TX_DATA	0x1b0b1
-				MX6QDL_PAD_EIM_D30__UART3_CTS_B   	0x1b0b1
+				MX6QDL_PAD_SD4_CLK__UART3_RX_DATA	0x1b0b1
 				MX6QDL_PAD_EIM_EB3__UART3_RTS_B   	0x1b0b1
+				MX6QDL_PAD_EIM_D23__UART3_CTS_B   	0x1b0b1
 			>;
 		};
 
 		pinctrl_uart4: uart4grp {
 			fsl,pins = <
-				MX6QDL_PAD_KEY_COL0__UART4_TX_DATA	0x1b0b1
-				MX6QDL_PAD_KEY_ROW0__UART4_RX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT12__UART4_TX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT13__UART4_RX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT16__UART4_RTS_B	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT17__UART4_CTS_B	0x1b0b1
 			>;
 		};
 
 		pinctrl_uart5: uart5grp {
 			fsl,pins = <
-				MX6QDL_PAD_KEY_COL1__UART5_TX_DATA	0x1b0b1
-				MX6QDL_PAD_KEY_ROW1__UART5_RX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT14__UART5_TX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT15__UART5_RX_DATA	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT18__UART5_RTS_B	0x1b0b1
+				MX6QDL_PAD_CSI0_DAT19__UART5_CTS_B	0x1b0b1
 			>;
 		};
 
@@ -298,9 +302,71 @@
 				MX6QDL_PAD_EIM_D21__USB_OTG_OC		0x1b0b0
 			>;
 		};
+
+		pinctrl_pwm1: pwm1grp {
+	                fsl,pins = <
+	                        MX6QDL_PAD_SD1_DAT3__PWM1_OUT            0x1b0b1
+	                >;
+		};
+
+		pinctrl_pwm2: pwm2grp {
+	                fsl,pins = <
+	                        MX6QDL_PAD_SD1_DAT2__PWM2_OUT            0x1b0b1
+	                >;
+		};
+
+		pinctrl_pwm3: pwm3grp {
+	                fsl,pins = <
+	                        MX6QDL_PAD_SD1_DAT1__PWM3_OUT            0x1b0b1
+	                >;
+		};
+
+		pinctrl_pwm4: pwm4grp {
+	                fsl,pins = <
+	                        MX6QDL_PAD_SD1_CMD__PWM4_OUT            0x1b0b1
+	                >;
+		};
 	};
 };
 
+
+&pwm1 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pwm1>;
+        status = "okay";
+};
+
+&pwm2 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pwm2>;
+        status = "okay";
+};
+
+&pwm3 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pwm3>;
+        status = "okay";
+};
+
+&pwm4 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pwm4>;
+        status = "okay";
+};
+
+&ecspi2 {
+    fsl,spi-num-chipselects = <1>;
+    cs-gpios = <&gpio2 26 GPIO_ACTIVE_LOW>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_ecspi2>;
+    status = "okay";
+
+    spidev@0x00 {
+        compatible = "spidev";
+        spi-max-frequency = <20000000>;
+        reg = <0>;
+    };
+};
 
 &i2c1 {
 	clock-frequency = <100000>;
@@ -310,7 +376,7 @@
 };
 
 
-// part of HDMI (J1)
+// part of HDMI (J1), not on extension header
 &i2c2 {
 	clock-frequency = <100000>;
 	pinctrl-names = "default";
@@ -416,7 +482,7 @@
 &uart1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_uart1>;
-	status = "okay";
+	status = "disabled";
 };
 
 
