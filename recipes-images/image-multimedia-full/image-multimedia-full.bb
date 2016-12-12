@@ -2,11 +2,16 @@
 
 require recipes-fsl/images/fsl-image-multimedia-full.bb
 
-EXTRA_IMAGE_FEATURES += " ssh-server-openssh tools-sdk package-management" 
+IMAGE_FEATURES += " \
+	ssh-server-openssh \
+	dev-pkgs \
+	tools-sdk \
+	tools-testapps \
+	tools-profile \
+	package-management \
+"
 
-EXTRA_IMAGE_FEATURES += " tools-testapps tools-profile"
-
-IMAGE_INSTALL_append += " htop i2c-tools"
+IMAGE_INSTALL_append += " strace tree htop tcpdump i2c-tools canutils"
 
 IMAGE_INSTALL_append += " \
     packagegroup-fsl-gstreamer1.0 \
@@ -25,12 +30,19 @@ IMAGE_INSTALL_append += " \
        bb.utils.contains('DISTRO_FEATURES', 'wayland', '', 'eglinfo-fb', d), d)} \
 "
 
+# Wlan stuff
+IMAGE_INSTALL_append += " linux-firmware crda iw wireless-tools wpa-supplicant"
+
+# for WiFi access point, needs meta-openembedded/meta-networking layer in bblayers.conf
+IMAGE_INSTALL_append += " hostapd dnsmasq iptables"
+
+# web server stuff
+IMAGE_INSTALL_append += " lighttpd lighttpd-module-fastcgi php php-cli"
 
 # the default "Boot MarSBoard" is not a valid FAT label and caused stress
 BOOTDD_VOLUME_ID = "BOOTMARS"
 
 # for on-target app development
-EXTRA_IMAGE_FEATURES += " dev-pkgs"
 IMAGE_INSTALL_append += " packagegroup-core-tools-profile packagegroup-core-buildessential"
 
 # # for on-target kernel development
@@ -47,6 +59,8 @@ IMAGE_INSTALL_append +=" cpufrequtils nano iperf git subversion wget"
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
 # as an alternative you might want to create a third partition on the microSD card for storing data
 IMAGE_ROOTFS_EXTRA_SPACE = "800000" 
+
+IMAGE_FSTYPES = "sdcard"
 
 # strictly speaking: only needed for libav (OpenCV)
 LICENSE_FLAGS_WHITELIST += " commercial"
