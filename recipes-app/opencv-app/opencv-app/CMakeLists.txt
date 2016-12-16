@@ -8,7 +8,7 @@ find_package(OpenCV REQUIRED)
 
 add_executable(opencv-app src/opencv-app.cpp)
 
-target_link_libraries(opencv-app opencv_core opencv_imgproc opencv_highgui)
+target_link_libraries(opencv-app opencv_core opencv_imgproc opencv_highgui opencv_videoio)
 
 install(TARGETS opencv-app DESTINATION /usr/bin)
 
