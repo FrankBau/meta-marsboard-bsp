@@ -3,7 +3,7 @@
 
 require image-multimedia-full.bb
 
-IMAGE_INSTALL_append += " opencv opencv-dev"
+IMAGE_INSTALL_append += " opencv opencv-dev cmake"
 
 # This adds the opencv samples to the image
 IMAGE_INSTALL_append += " opencv-samples"
