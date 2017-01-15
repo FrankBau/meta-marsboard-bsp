@@ -45,6 +45,11 @@ BOOTDD_VOLUME_ID = "BOOTMARS"
 # for on-target app development
 IMAGE_INSTALL_append += " packagegroup-core-tools-profile packagegroup-core-buildessential"
 
+# pulseaudio packages
+IMAGE_INSTALL_append += " packagegroup-pulseaudio"
+
+
+
 # # for on-target kernel development
 # this adds > 1GB additional sources and headers
 # uncomment this if needed
