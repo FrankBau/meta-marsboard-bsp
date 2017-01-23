@@ -1,6 +1,8 @@
 This repo extends the [FSL Community BSP](https://github.com/Freescale/fsl-community-bsp-platform)
 with an additional [Yocto](https://www.yoctoproject.org/) layer to support the i.MX6 based [MarS Board](http://www.embest-tech.com/shop/star/marsboard.html)
 
+It all started in 2014 with a [.dts and defconfig](https://www.gitorious.org/u-boot-2013-04-port-on-imx6-marsboard/u-boot-2013-04-port-on-imx6-marsboard.git/?p=u-boot-2013-04-port-on-imx6-marsboard:u-boot-2013-04-port-on-imx6-marsboard.git;a=tree;h=389452b8485c4398e3a62d6db16db36920f4c53a;hb=389452b8485c4398e3a62d6db16db36920f4c53a) by Hariharan Veerappan.
+
 Full docs are in the [wiki](https://github.com/FrankBau/meta-marsboard-bsp/wiki)
 
 
