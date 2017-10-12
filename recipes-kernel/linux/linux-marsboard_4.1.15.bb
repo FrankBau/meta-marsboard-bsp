@@ -17,9 +17,9 @@ do_compile_prepend () {
 	${S}/arch/${ARCH}/boot/dts
 }
 
-LOCALVERSION = "-1.0.0_ga+yocto"
-SRCBRANCH = "boundary-imx_4.1.15_1.0.0_ga"
-SRCREV = "76c24a0cde0d50fc8006b15db94f9c3efc5ec979"
+LOCALVERSION = "-2.0.0_ga+yocto"
+SRCBRANCH = "boundary-imx_4.1.15_2.0.0_ga"
+SRCREV = "f7cc79eff5f3790104e85f00528cadf8572c38ea"
 
 DEPENDS += "lzop-native bc-native"
 

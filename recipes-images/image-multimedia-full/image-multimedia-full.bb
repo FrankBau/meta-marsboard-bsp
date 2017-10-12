@@ -11,7 +11,7 @@ IMAGE_FEATURES += " \
 	package-management \
 "
 
-IMAGE_INSTALL_append += " strace tree htop tcpdump i2c-tools canutils"
+IMAGE_INSTALL_append += " cmake strace tree htop i2c-tools canutils"
 
 IMAGE_INSTALL_append += " \
     packagegroup-fsl-gstreamer1.0 \
@@ -31,10 +31,10 @@ IMAGE_INSTALL_append += " \
 "
 
 # Wlan stuff
-IMAGE_INSTALL_append += " linux-firmware crda iw wireless-tools wpa-supplicant"
+IMAGE_INSTALL_append += " linux-firmware iw wireless-tools wpa-supplicant"
 
 # for WiFi access point, needs meta-openembedded/meta-networking layer in bblayers.conf
-IMAGE_INSTALL_append += " hostapd dnsmasq iptables"
+#IMAGE_INSTALL_append += " hostapd dnsmasq iptables tcpdump crda"
 
 # web server stuff
 IMAGE_INSTALL_append += " lighttpd lighttpd-module-fastcgi php php-cli"
@@ -55,7 +55,7 @@ IMAGE_INSTALL_append += " packagegroup-pulseaudio"
 # uncomment this if needed
 # IMAGE_INSTALL_append += " kernel-dev kernel-devsrc kernel-modules"
 
-IMAGE_INSTALL_append +=" cpufrequtils nano iperf git subversion wget" 
+IMAGE_INSTALL_append +=" cpufrequtils nano iperf3 git subversion wget" 
 
 # link errors in krogoth, t.b.d.
 # IMAGE_INSTALL_append +=" libsdl2 libsdl2-dev" 
@@ -64,8 +64,6 @@ IMAGE_INSTALL_append +=" cpufrequtils nano iperf git subversion wget"
 # drawback: this empty spaces makes the .sdcard image larger and copying (dd) slower
 # as an alternative you might want to create a third partition on the microSD card for storing data
 IMAGE_ROOTFS_EXTRA_SPACE = "800000" 
-
-IMAGE_FSTYPES = "sdcard"
 
 # strictly speaking: only needed for libav (OpenCV)
 LICENSE_FLAGS_WHITELIST += " commercial"
